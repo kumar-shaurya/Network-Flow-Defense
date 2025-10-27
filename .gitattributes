@@ -1,0 +1,10 @@
+# Set default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Force LF (Unix) line endings for shell scripts and other key file types
+# This is the most important part for fixing the Vercel error.
+*.sh eol=lf
+*.js eol=lf
+*.json eol=lf
+*.css eol=lf
+*.md eol=lf
