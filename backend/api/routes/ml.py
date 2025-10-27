@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException, Body
 from pydantic import BaseModel
 import os
 import sys
+import json  # <--- FIX 1: IMPORT THE JSON LIBRARY
 
 # --- Robust Path Finding ---
 # This code builds an absolute path to your model files,
@@ -54,9 +55,12 @@ def load_model():
         return
 
     try:
+        # Load the model using joblib (binary file)
         model = joblib.load(MODEL_PATH)
+        
+        # --- FIX 2: USE json.load() for the .json file ---
         with open(COLS_PATH, 'r') as f:
-            feature_columns = joblib.load(f)
+            feature_columns = json.load(f)
         
         print("ML model and feature columns loaded successfully.")
     except Exception as e:
