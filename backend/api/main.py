@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os # Import the os module
 
 from api.routes import game, ml
 
@@ -13,10 +14,21 @@ def on_startup():
     ml.load_model() # Load the ML model
 
 # --- Middleware ---
-# Allow CORS for the React frontend (running on port 3000)
+
+# Define the origins that are allowed to make requests
 origins = [
-    "http://localhost:3000",
+    "http://localhost:3000", # For local React development
 ]
+
+# --- THIS IS THE KEY CHANGE ---
+# We'll get the Vercel frontend URL from an environment variable
+# In Render, you will set a variable named 'PROD_ORIGIN'
+# to your Vercel URL (e.g., "https://my-app.vercel.app")
+prod_origin = os.getenv("PROD_ORIGIN")
+if prod_origin:
+    print(f"Adding production origin: {prod_origin}")
+    origins.append(prod_origin)
+# -----------------------------
 
 app.add_middleware(
     CORSMiddleware,
