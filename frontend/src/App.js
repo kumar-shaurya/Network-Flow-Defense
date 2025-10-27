@@ -1,3 +1,4 @@
+//force purge
 import React, { useState, useCallback, useRef } from 'react'; // useEffect removed
 import ForceGraph2D from 'react-force-graph-2d';
 import { getNewGame, runSimulation, getMlSuggestion } from './utils/api';
